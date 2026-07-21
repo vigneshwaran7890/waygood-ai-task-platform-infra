@@ -38,9 +38,9 @@ patches:
       name: backend-secret
 
 images:
-  - name: docker.io/vigneshwaran/ai-task-backend
+  - name: docker.io/vignesh0756/ai-task-backend
     newTag: latest
-  - name: docker.io/vigneshwaran/ai-task-frontend
+  - name: docker.io/vignesh0756/ai-task-frontend
     newTag: latest
-  - name: docker.io/vigneshwaran/ai-task-worker
+  - name: docker.io/vignesh0756/ai-task-worker
     newTag: latest

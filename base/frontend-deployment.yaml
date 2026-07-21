@@ -23,7 +23,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: frontend
-          image: docker.io/vigneshwaran/ai-task-frontend:latest
+          image: docker.io/vignesh0756/ai-task-frontend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

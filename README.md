@@ -113,7 +113,7 @@ kubectl kustomize overlays/production
 Common changes:
 
 - **Bump an image tag manually** (normally done by CI, but for a manual
-  rollback): `cd overlays/staging && kustomize edit set image docker.io/vigneshwaran/ai-task-backend=docker.io/vigneshwaran/ai-task-backend:<tag>`
+  rollback): `cd overlays/staging && kustomize edit set image docker.io/vignesh0756/ai-task-backend=docker.io/vignesh0756/ai-task-backend:<tag>`
 - **Change replica count / resource limits**: edit the relevant
   `overlays/<env>/*-patch.yaml` file — never edit `base/*` for an
   environment-specific tweak; `base/` is the shared foundation both
