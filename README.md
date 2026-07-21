@@ -1,7 +1,7 @@
 # AI Task Platform — Infrastructure Repository
 
 Kubernetes manifests and GitOps configuration for the
-[AI Task Processing Platform](https://github.com/CHANGE_ME/waygood-ai-task-platform),
+[AI Task Processing Platform](https://github.com/vigneshwaran7890/waygood-ai-task-platform),
 managed with Kustomize and deployed via Argo CD.
 
 This repository is the single source of truth for what runs in each
