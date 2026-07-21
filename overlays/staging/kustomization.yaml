@@ -4,42 +4,45 @@ kind: Kustomization
 namespace: ai-task-platform-staging
 
 resources:
-  - ../../base
+- ../../base
 
 patches:
-  - path: backend-patch.yaml
-    target:
-      kind: Deployment
-      name: backend
-  - path: frontend-patch.yaml
-    target:
-      kind: Deployment
-      name: frontend
-  - path: worker-patch.yaml
-    target:
-      kind: Deployment
-      name: worker
-  - path: worker-hpa-patch.yaml
-    target:
-      kind: HorizontalPodAutoscaler
-      name: worker
-  - path: ingress-patch.yaml
-    target:
-      kind: Ingress
-      name: ai-task-platform
-  - path: configmap-patch.yaml
-    target:
-      kind: ConfigMap
-      name: backend-config
-  - path: backend-secret-patch.yaml
-    target:
-      kind: Secret
-      name: backend-secret
+- path: backend-patch.yaml
+  target:
+    kind: Deployment
+    name: backend
+- path: frontend-patch.yaml
+  target:
+    kind: Deployment
+    name: frontend
+- path: worker-patch.yaml
+  target:
+    kind: Deployment
+    name: worker
+- path: worker-hpa-patch.yaml
+  target:
+    kind: HorizontalPodAutoscaler
+    name: worker
+- path: ingress-patch.yaml
+  target:
+    kind: Ingress
+    name: ai-task-platform
+- path: configmap-patch.yaml
+  target:
+    kind: ConfigMap
+    name: backend-config
+- path: backend-secret-patch.yaml
+  target:
+    kind: Secret
+    name: backend-secret
 
 images:
-  - name: docker.io/vignesh0756/ai-task-backend
-    newTag: staging
-  - name: docker.io/vignesh0756/ai-task-frontend
-    newTag: staging
-  - name: docker.io/vignesh0756/ai-task-worker
-    newTag: staging
+- name: docker.io/vignesh0756/ai-task-backend
+  newName: docker.io/vignesh0756/ai-task-backend
+  newTag: main-a009c1124bcb
+- name: docker.io/vignesh0756/ai-task-frontend
+  newName: docker.io/vignesh0756/ai-task-frontend
+  newTag: main-a009c1124bcb
+- name: docker.io/vignesh0756/ai-task-worker
+  newName: docker.io/vignesh0756/ai-task-worker
+  newTag: main-a009c1124bcb
