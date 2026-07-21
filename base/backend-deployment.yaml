@@ -23,7 +23,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: backend
-          image: docker.io/waygood/ai-task-backend:latest
+          image: docker.io/vigneshwaran/ai-task-backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000

@@ -37,9 +37,9 @@ patches:
       name: backend-secret
 
 images:
-  - name: docker.io/waygood/ai-task-backend
+  - name: docker.io/vigneshwaran/ai-task-backend
     newTag: staging
-  - name: docker.io/waygood/ai-task-frontend
+  - name: docker.io/vigneshwaran/ai-task-frontend
     newTag: staging
-  - name: docker.io/waygood/ai-task-worker
+  - name: docker.io/vigneshwaran/ai-task-worker
     newTag: staging

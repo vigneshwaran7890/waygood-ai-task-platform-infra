@@ -27,7 +27,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: worker
-          image: docker.io/waygood/ai-task-worker:latest
+          image: docker.io/vigneshwaran/ai-task-worker:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: WORKER_ID
