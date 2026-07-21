@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  CORS_ORIGIN: "https://staging.ai-task-platform.example.com"
+  COOKIE_DOMAIN: "staging.ai-task-platform.example.com"
+  RATE_LIMIT_MAX: "300"

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: ai-task-platform
+data:
+  NODE_ENV: "production"
+  PORT: "5000"
+  MONGO_URI: "mongodb://mongo:27017/ai_task_platform"
+  REDIS_URL: "redis://redis:6379"
+  REDIS_TASK_QUEUE: "ai:tasks:queue"
+  JWT_ACCESS_EXPIRES_IN: "15m"
+  JWT_REFRESH_EXPIRES_IN: "30d"
+  REFRESH_TOKEN_TTL_MS: "2592000000"
+  REFRESH_COOKIE_NAME: "refreshToken"
+  REFRESH_COOKIE_PATH: "/api/auth"
+  COOKIE_SECURE: "true"
+  COOKIE_SAME_SITE: "strict"
+  RATE_LIMIT_WINDOW_MS: "60000"
+  RATE_LIMIT_MAX: "100"
+  # Overridden per-overlay to the environment's actual frontend origin.
+  CORS_ORIGIN: "https://staging.ai-task-platform.example.com"

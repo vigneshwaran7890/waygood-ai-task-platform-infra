@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: ai-task-platform
+  labels:
+    app.kubernetes.io/name: worker
+    app.kubernetes.io/part-of: ai-task-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: worker
+        app.kubernetes.io/part-of: ai-task-platform
+    spec:
+      # Workers are stateless Redis consumers: any replica can pick up any
+      # task (BRPOP guarantees each queued item goes to exactly one caller),
+      # so scaling this number up/down never risks double-processing.
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: worker
+          image: docker.io/waygood/ai-task-worker:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: WORKER_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          envFrom:
+            - configMapRef:
+                name: worker-config
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import redis, os; redis.from_url(os.environ['REDIS_URL']).ping()"
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import redis, os; redis.from_url(os.environ['REDIS_URL']).ping()"
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 5

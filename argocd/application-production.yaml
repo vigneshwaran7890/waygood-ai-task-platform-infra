@@ -1,0 +1,43 @@
+# CHANGE_ME: replace `spec.source.repoURL` below with this repository's real
+# Git remote URL once it has been pushed (e.g. to GitHub) before applying.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-task-platform-production
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: ai-task-platform
+
+  source:
+    repoURL: https://github.com/CHANGE_ME/waygood-ai-task-platform-infra.git
+    # Production tracks its own long-lived branch rather than `main`, so
+    # promoting a release is a deliberate "merge staging -> production"
+    # action (typically done by the CI pipeline after a tagged app release),
+    # not something that happens on every commit to the infra repo.
+    targetRevision: production
+    path: overlays/production
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ai-task-platform-prod
+
+  syncPolicy:
+    automated:
+      # Auto-sync is still enabled here (required by the assignment) — the
+      # gate on production changes is upstream of this: it's *what* lands on
+      # the `production` branch that's controlled, not whether Argo CD syncs
+      # it once it's there.
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 5m

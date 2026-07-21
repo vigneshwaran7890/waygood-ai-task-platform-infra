@@ -1,0 +1,39 @@
+# CHANGE_ME: replace `spec.source.repoURL` below with this repository's real
+# Git remote URL once it has been pushed (e.g. to GitHub) before applying.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-task-platform-staging
+  namespace: argocd
+  finalizers:
+    # Ensures Argo CD deletes the app's managed resources if this Application
+    # itself is ever deleted, rather than orphaning them in the cluster.
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: ai-task-platform
+
+  source:
+    repoURL: https://github.com/CHANGE_ME/waygood-ai-task-platform-infra.git
+    targetRevision: main
+    path: overlays/staging
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ai-task-platform-staging
+
+  syncPolicy:
+    automated:
+      # Auto-sync: any commit merged to `main` under overlays/staging is
+      # applied to the cluster automatically, with no manual `argocd sync`.
+      prune: true # remove resources deleted from Git
+      selfHeal: true # revert manual kubectl edits back to what Git declares
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

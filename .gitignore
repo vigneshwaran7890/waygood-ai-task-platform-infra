@@ -1,0 +1,6 @@
+# Never commit locally-generated real secret values.
+*.local.yaml
+*-secrets.yaml
+*-secrets.local.yaml
+
+.DS_Store

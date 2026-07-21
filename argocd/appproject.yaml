@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ai-task-platform
+  namespace: argocd
+spec:
+  description: AI Task Processing Platform — staging and production applications
+
+  sourceRepos:
+    - https://github.com/CHANGE_ME/waygood-ai-task-platform-infra.git
+
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: ai-task-platform-staging
+    - server: https://kubernetes.default.svc
+      namespace: ai-task-platform-prod
+
+  # Restrict to only the resource kinds this platform actually needs —
+  # narrows the blast radius of a compromised or misconfigured Application
+  # compared to the unrestricted `default` project.
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: ""
+      kind: Service
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: networking.k8s.io
+      kind: Ingress
