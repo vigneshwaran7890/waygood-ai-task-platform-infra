@@ -7,7 +7,7 @@ spec:
   description: AI Task Processing Platform — staging and production applications
 
   sourceRepos:
-    - https://github.com/CHANGE_ME/waygood-ai-task-platform-infra.git
+    - https://github.com/vigneshwaran7890/waygood-ai-task-platform-infra.git
 
   destinations:
     - server: https://kubernetes.default.svc
